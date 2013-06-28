@@ -1,5 +1,3 @@
-# -*- coding: windows-1250 -*-
-
 '''
 This scripts copy cuts depending on the size of a single-cut from the Cuts directory.
 
@@ -8,7 +6,7 @@ To run this script you have to have "Cuts" directory in the main directory, whic
 '''
 
 __author__ = 'itor13@gmail.com'
-__version__ = '3.9'
+__version__ = '3.92'
 
 import os, sys, shutil, wx, time
 
@@ -25,7 +23,7 @@ class Cuts_copy(wx.Frame):
         global items
 
         if not os.path.exists('Cuts'):
-            message=wx.MessageDialog(None,'Nie mogê znaleŸæ folderu Cuts. Skopiuj folder z przekrojami do folderu g³ównego i nadaj mu nazwê "Cuts"!','B³¹d',wx.ICON_HAND)
+            message=wx.MessageDialog(None,'Can\'t find "Cuts" directiory. Please, copy directory with cuts into the main directory and rename it as "Cuts"!','Error',wx.ICON_HAND)
             message.ShowModal()
             wx.Frame.__init__(self,parent,id,'Cuts Coppier',size=(600,200))
             self.Destroy()
@@ -42,11 +40,11 @@ class Cuts_copy(wx.Frame):
             self.progress_bar.SetSize((200, 20))
             self.progress_bar.Show()
 
-            self.size_of_sulpture_text_up=wx.StaticText(self.panel, -1, "Rozmiar rzeŸby [w mm]", (10,10),(250,-1),wx.ALIGN_CENTER)
+            self.size_of_sulpture_text_up=wx.StaticText(self.panel, -1, "Size of a sculpture [mm]", (10,10),(250,-1),wx.ALIGN_CENTER)
             self.size_of_sulpture_text_up.SetForegroundColour('white')
             self.size_of_sulpture_text_up.SetBackgroundColour('blue')
 
-            self.user_cut_thickness_text_up=wx.StaticText(self.panel, -1, "Rozmiar przekroju [w mm]", (10,60),(250,-1),wx.ALIGN_CENTER)
+            self.user_cut_thickness_text_up=wx.StaticText(self.panel, -1, "Size of a cut [mm]", (10,60),(250,-1),wx.ALIGN_CENTER)
             self.user_cut_thickness_text_up.SetForegroundColour('white')
             self.user_cut_thickness_text_up.SetBackgroundColour('blue')
 
@@ -54,17 +52,17 @@ class Cuts_copy(wx.Frame):
             self.user_cut_thickness_text.SetForegroundColour('white')
             self.user_cut_thickness_text.SetBackgroundColour('dark green')
 
-            self.amount_of_cuts_text=wx.StaticText(self.panel, -1, "Iloœæ wszystkich przekrojów z bazy danych: " + str(amount_of_cuts), (10,110),)
+            self.amount_of_cuts_text=wx.StaticText(self.panel, -1, "Amount of all cuts from database: " + str(amount_of_cuts), (10,110),)
             self.amount_of_cuts_text.SetForegroundColour('white')
             self.amount_of_cuts_text.SetBackgroundColour('dark green')
 
-            self.amount_of_copied_cuts_text=wx.StaticText(self.panel, -1, "Iloœæ przekrojów jaka zosta³a skopiowana: " + str(amount_of_copied_cuts), (10,140),)
+            self.amount_of_copied_cuts_text=wx.StaticText(self.panel, -1, "Amount of cuts which was coppied: " + str(amount_of_copied_cuts), (10,140),)
             self.amount_of_copied_cuts_text.SetForegroundColour('white')
             self.amount_of_copied_cuts_text.SetBackgroundColour('dark green')
 
-            self.status_text=wx.StaticText(self.panel, -1, "Jak sie masz?", (380,120),size=(100, -1), style=wx.TE_CENTRE)
+            self.status_text=wx.StaticText(self.panel, -1, "How are you?", (380,120),size=(100, -1), style=wx.TE_CENTRE)
 
-            self.button=wx.Button(self.panel,label="Skopiuj odpowiednie przekroje",pos=(330,30),size=(200,60))
+            self.button=wx.Button(self.panel,label="Copy property cuts",pos=(330,30),size=(200,60))
 
             self.Bind(wx.EVT_BUTTON,self.Cuts_coppier)
             self.box=wx.TextCtrl(self.panel, pos=(10,30),size=(250,-1),style=wx.TE_CENTRE)
@@ -83,24 +81,24 @@ class Cuts_copy(wx.Frame):
             size_of_sculpture = float(self.box.GetValue())
             user_cut_thickness = float(self.box2.GetValue())
         except:
-            self.message_show('Wpisa³eœ niepoprawne dane!')
+            self.message_show('You provide wrong data!')
             self.Blad_status()
-            self.amount_of_copied_cuts_text.SetLabel("Iloœæ przekrojów jaka zosta³a skopiowana: " + str(0))
+            self.amount_of_copied_cuts_text.SetLabel("Amount of cuts which was coppied: " + str(0))
             return
         if not os.path.exists('Cuts'):
-            self.message_show('Nie mogê znaleœæ folderu Cuts. Skopiuj folder z przekrojami do folderu g³ównego i nadaj mu nazwê "Cuts"!')
+            self.message_show('Can\'t find "Cuts" directiory. Please, copy directory with cuts into the main directory and rename it as "Cuts"!')
             self.Blad_status()
-            self.amount_of_copied_cuts_text.SetLabel("Iloœæ przekrojów jaka zosta³a skopiowana: " + str(0))
+            self.amount_of_copied_cuts_text.SetLabel("Amount of cuts which was coppied: " + str(0))
             return
         elif size_of_sculpture <= 0 or user_cut_thickness <= 0:
-            self.message_show('Musz¹ to byæ liczby wiêksze od zera.')
+            self.message_show('You have to provide numbers greater than zero.')
             self.Blad_status()
-            self.amount_of_copied_cuts_text.SetLabel("Iloœæ przekrojów jaka zosta³a skopiowana: " + str(0))
+            self.amount_of_copied_cuts_text.SetLabel("Amount of cuts which was coppied: " + str(0))
             return
         elif size_of_sculpture < user_cut_thickness:
             self.Cuts_result_dir()
             shutil.copy("Cuts/"+str(int(round((len(items)/2),0)))+".jpg", "Cuts_result/"+str(1)+".jpg")
-            self.amount_of_copied_cuts_text.SetLabel("Iloœæ przekrojów jaka zosta³a skopiowana: " + str(1))
+            self.amount_of_copied_cuts_text.SetLabel("Amount of cuts which was coppied: " + str(1))
             self.progress_bar.SetValue(100)
             wx.Yield()
             self.OK_status()
@@ -152,7 +150,7 @@ class Cuts_copy(wx.Frame):
 
             else:
                 amount_of_copied_cuts = 0
-                self.message_show('Folder "Cuts" jest pusty!!!')
+                self.message_show('"Cuts" directory  is empty!!!')
                 self.amounts()
                 self.Blad_status()
 
@@ -176,7 +174,7 @@ class Cuts_copy(wx.Frame):
                     except:
                         message_file= str("Z: Cuts/%s\nDo: Cuts_result/%s.jpg") % (filename_read, str(filename_write))
                         self.Blad_status()
-                        self.message_show('B³ad kopiowania pliku\n'+message_file)
+                        self.message_show('Can\'t copy file\n'+message_file)
                         return
                     filename_write += 1
                     cuts_size_count += user_cut_thickness
@@ -193,7 +191,7 @@ class Cuts_copy(wx.Frame):
                     except:
                         message_file= str("Z: Cuts/%s\nDo: Cuts_result/%s.jpg") % (filename_read, str(filename_write))
                         self.Blad_status()
-                        self.message_show('B³ad kopiowania pliku\n'+message_file)
+                        self.message_show('Can\'t copy file\n'+message_file)
                         return
                     filename_write += 1
                     cuts_size_count = cuts_size_count - cut_thickness
@@ -208,7 +206,7 @@ class Cuts_copy(wx.Frame):
                     except:
                         message_file= str("Z: Cuts/%s\nDo: Cuts_result/%s.jpg") % (filename_read, str(filename_write))
                         self.Blad_status()
-                        self.message_show('B³ad kopiowania pliku\n'+message_file)
+                        self.message_show('Can\'t copy file\n'+message_file)
                         return
                     filename_write += 1
         self.OK_status()
@@ -217,7 +215,7 @@ class Cuts_copy(wx.Frame):
         '''
         Change status to: B³ad!
         '''
-        self.status_text=wx.StaticText(self.panel, -1, "B³¹d!", (380,120),size=(100, -1), style=wx.TE_CENTRE)
+        self.status_text=wx.StaticText(self.panel, -1, "Error!", (380,120),size=(100, -1), style=wx.TE_CENTRE)
         self.status_text.SetForegroundColour('white')
         self.status_text.SetBackgroundColour('red')
 
@@ -225,7 +223,7 @@ class Cuts_copy(wx.Frame):
         '''
         Change status to: Wszystko OK!
         '''
-        self.status_text=wx.StaticText(self.panel, -1, "Wszystko OK!", (380,120),size=(100, -1), style=wx.TE_CENTRE)
+        self.status_text=wx.StaticText(self.panel, -1, "Everythings OK!", (380,120),size=(100, -1), style=wx.TE_CENTRE)
         self.status_text.SetForegroundColour('white')
         self.status_text.SetBackgroundColour('dark green')
         self.amounts()
@@ -244,7 +242,7 @@ class Cuts_copy(wx.Frame):
         Show provided message
         '''
         self.amounts()
-        message_warning=wx.MessageDialog(None,message,'B³¹d',wx.ICON_HAND)
+        message_warning=wx.MessageDialog(None,message,'Error',wx.ICON_HAND)
         message_warning.ShowModal()
         self.button.Enable()
         
@@ -257,8 +255,8 @@ class Cuts_copy(wx.Frame):
             amount_of_copied_cuts = len(os.listdir('Cuts_result'))
         except:
             amount_of_copied_cuts = 0
-        self.amount_of_cuts_text.SetLabel("Iloœæ wszystkich przekrojów z bazy danych: " + str(amount_of_cuts))
-        self.amount_of_copied_cuts_text.SetLabel("Iloœæ przekrojów jaka zosta³a skopiowana: " + str(amount_of_copied_cuts))
+        self.amount_of_cuts_text.SetLabel("Amount of all cuts from database: " + str(amount_of_cuts))
+        self.amount_of_copied_cuts_text.SetLabel("Amount of cuts which was coppied: " + str(amount_of_copied_cuts))
 
     def progress(self,total_cuts_count, amount_of_cuts):
         '''
