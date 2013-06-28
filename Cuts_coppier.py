@@ -213,7 +213,7 @@ class Cuts_copy(wx.Frame):
 
     def Blad_status(self):
         '''
-        Change status to: B³ad!
+        Change status to: Error!
         '''
         self.status_text=wx.StaticText(self.panel, -1, "Error!", (380,120),size=(100, -1), style=wx.TE_CENTRE)
         self.status_text.SetForegroundColour('white')
@@ -221,9 +221,9 @@ class Cuts_copy(wx.Frame):
 
     def OK_status(self):
         '''
-        Change status to: Wszystko OK!
+        Change status to: Everything is OK!
         '''
-        self.status_text=wx.StaticText(self.panel, -1, "Everythings OK!", (380,120),size=(100, -1), style=wx.TE_CENTRE)
+        self.status_text=wx.StaticText(self.panel, -1, "Everything is OK!", (380,120),size=(100, -1), style=wx.TE_CENTRE)
         self.status_text.SetForegroundColour('white')
         self.status_text.SetBackgroundColour('dark green')
         self.amounts()
@@ -231,7 +231,7 @@ class Cuts_copy(wx.Frame):
         
     def working_status(self):
         '''
-        Change status to: Woring...
+        Change status to: Working...
         '''
         self.status_text=wx.StaticText(self.panel, -1, "Working...!", (380,120),size=(100, -1), style=wx.TE_CENTRE)
         self.status_text.SetForegroundColour('black')
@@ -242,7 +242,7 @@ class Cuts_copy(wx.Frame):
         Show provided message
         '''
         self.amounts()
-        message_warning=wx.MessageDialog(None,message,'Error',wx.ICON_HAND)
+        message_warning=wx.MessageDialog(None,message,'Error!',wx.ICON_HAND)
         message_warning.ShowModal()
         self.button.Enable()
         
