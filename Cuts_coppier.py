@@ -156,7 +156,7 @@ class Cuts_copy(wx.Frame):
 
     def Bigger_Cuts(self):
         '''
-        Copy cuts if cut thickness is smaller then user cut thickness
+        Copy cuts if cut thickness is smaller than user cut thickness
         '''
         cut_number = 1
         filename_write = 1
